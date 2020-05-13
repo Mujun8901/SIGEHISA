@@ -11,42 +11,42 @@ public class PlayerControl : MonoBehaviour
     public float jumpSpeed;
     public float gravity;
     public float smooth;
-    private bool isGround;  // 地面との接触判定
+    private bool isGround;
+    float distance;
+    private Vector3 addForceDownPower = Vector3.down;
 
-    //CharacterController controller;
-    Rigidbody rb;
+    CharacterController controller;
     Animator animator;
-
     Vector3 moveDir;
 
     void Start()
     {
-        // controller = GetComponent<CharacterController>();
-        rb = GetComponent<Rigidbody>();
+        controller = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
         moveDir = Vector3.zero;
-        isGround = true;
     }
 
     void Update()
     {
-        if(isGround)
+        isGround = !controller.isGrounded;
+        if (controller.isGrounded)
         {
             RotatePlayer();
             MovePlayer();
             JumpPlayer();
         }
-        else if(!isGround)
+        else
         {
-            //IsGravity();       
+            IsGravity();       
         }
-
         // 移動実行
-        rb.MovePosition(transform.position * Time.deltaTime + new Vector3(moveDir.z, moveDir.y, moveDir.z));
-        if (isGround) moveDir.y = 0.0f;
-
+        controller.Move(Time.deltaTime * moveDir);
+        
+        if (controller.isGrounded) moveDir.y = 0.0f;
+        Debug.Log("x" + moveDir.x + "y" + moveDir.y + "z" + moveDir.z);
         // アニメーション
         animator.SetBool("jump", isGround);
+        animator.SetFloat("speed", Vector3.Magnitude(moveDir));
     }
 
     void MovePlayer()
@@ -64,6 +64,10 @@ public class PlayerControl : MonoBehaviour
         {
             moveDir.y = jumpSpeed;
         }
+        else
+        {
+            moveDir.y -= gravity * Time.deltaTime;
+        }
     }
 
     void RotatePlayer()
@@ -78,17 +82,5 @@ public class PlayerControl : MonoBehaviour
     void IsGravity()
     {
         moveDir.y -= gravity * Time.deltaTime;
-    }
-
-    void OnCollisionStay(Collision collision)
-    {
-        Debug.Log("stay");
-        isGround = true;
-    }
-
-    void OnCollisionExit(Collision collision)
-    {
-        isGround = false;
-        Debug.Log("jump");
     }
 }
