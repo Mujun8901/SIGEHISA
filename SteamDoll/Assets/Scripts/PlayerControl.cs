@@ -31,7 +31,7 @@ public class PlayerControl : MonoBehaviour
         isGround = !controller.isGrounded;
         if (controller.isGrounded)
         {
-            RotatePlayer();
+            RotatePlayer();            
             MovePlayer();
             JumpPlayer();
         }
@@ -41,9 +41,8 @@ public class PlayerControl : MonoBehaviour
         }
         // 移動実行
         controller.Move(Time.deltaTime * moveDir);
-        
         if (controller.isGrounded) moveDir.y = 0.0f;
-        Debug.Log("x" + moveDir.x + "y" + moveDir.y + "z" + moveDir.z);
+
         // アニメーション
         animator.SetBool("jump", isGround);
         animator.SetFloat("speed", Vector3.Magnitude(moveDir));
