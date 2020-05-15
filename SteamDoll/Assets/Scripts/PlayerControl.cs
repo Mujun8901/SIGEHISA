@@ -12,8 +12,6 @@ public class PlayerControl : MonoBehaviour
     public float gravity;
     public float smooth;
     private bool isGround;
-    float distance;
-    private Vector3 addForceDownPower = Vector3.down;
 
     CharacterController controller;
     Animator animator;
@@ -31,18 +29,18 @@ public class PlayerControl : MonoBehaviour
         isGround = !controller.isGrounded;
         if (controller.isGrounded)
         {
-            RotatePlayer();            
+            RotatePlayer();
             MovePlayer();
             JumpPlayer();
         }
         else
         {
-            IsGravity();       
+            IsGravity();
         }
+        
         // 移動実行
         controller.Move(Time.deltaTime * moveDir);
         if (controller.isGrounded) moveDir.y = 0.0f;
-
         // アニメーション
         animator.SetBool("jump", isGround);
         animator.SetFloat("speed", Vector3.Magnitude(moveDir));
