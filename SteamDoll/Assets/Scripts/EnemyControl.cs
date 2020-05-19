@@ -1,25 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class EnemyControl : MonoBehaviour
 {
-    [SerializeField]
-    private float speed;
-    [SerializeField]
-    private float smooth;
-    [SerializeField]
-    private Transform target;
-
-    Animator animator;
-    Vector3 moveDir;
-    private bool setWolk;
-    private int wolkCnt;
+    public Transform target;
+    public bool setWolk;
     private float enemySearchRadius;
     private Transform myTransform;
-    private NavMeshAgent agent;
+    public NavMeshAgent agent;
 
     private LayerMask raycastLayer;
 
@@ -27,26 +19,26 @@ public class EnemyControl : MonoBehaviour
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        animator = GetComponent<Animator>();
         myTransform = transform;
-        moveDir = Vector3.zero;
         setWolk = false;
-        enemySearchRadius = 5f;
+        enemySearchRadius = 20f;
         raycastLayer = 1 << LayerMask.NameToLayer("Player");
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        SearchForTorget();
+        MoveForTorget();
     }
 
-    void SearchForTorget()
+    public void SearchForTorget()
     {
         target = null;
         if (target == null)
         {
-            Collider[] hitColliders = Physics.OverlapSphere(myTransform.position, enemySearchRadius, raycastLayer);
+            Collider[] hitColliders = Physics.OverlapSphere
+                                       (myTransform.position, enemySearchRadius, raycastLayer);
             if (hitColliders.Length > 0)
             {
                 int randomInt = Random.Range(0, hitColliders.Length);
@@ -61,7 +53,15 @@ public class EnemyControl : MonoBehaviour
 
     void MoveForTorget()
     {
+        if (target != null)
+        {
+            SetNavDestination(target);
+        }
+    }
 
+    void SetNavDestination(Transform dest)
+    {
+        agent.SetDestination(dest.position);
     }
 
     void RandomWolk()
@@ -74,11 +74,11 @@ public class EnemyControl : MonoBehaviour
             setWolk = true;
             Debug.Log("setWolk");
         }
-        else if (setWolk)
+        if (setWolk)
         {
             Debug.Log("stop");
             agent.SetDestination(agent.destination);
-            if (agent.remainingDistance < 2.5f) 
+            if (agent.remainingDistance < 5) 
             {
                 setWolk = false;
             }
