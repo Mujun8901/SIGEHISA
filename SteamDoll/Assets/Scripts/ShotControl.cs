@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class ShotControl : MonoBehaviour
 {
-    // Start is called before the first frame update
+    [SerializeField]
+    private float lifeTime;
+    [SerializeField]
+    private float speed;
+
+    public int power;
+
     void Start()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        GetComponent<Rigidbody>().AddRelativeForce(Vector3.forward * speed);
+        Destroy(gameObject, lifeTime);
     }
 }

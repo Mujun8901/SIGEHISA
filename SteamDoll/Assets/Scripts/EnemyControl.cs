@@ -133,10 +133,7 @@ public class EnemyControl : MonoBehaviour
     // 攻撃A 砲撃
     void Attack1()
     {
-        GameObject shots = Instantiate(shot) as GameObject;
-
-        shots.transform.position = muzzle.position;
-        
+        StartCoroutine(this.CreateShot());
         Debug.Log("1");
         // 攻撃を終了する
         nextAttack = false;
@@ -145,9 +142,7 @@ public class EnemyControl : MonoBehaviour
     // 攻撃B 拡散弾
     void Attack2()
     {
-        GameObject shots = Instantiate(shot) as GameObject;
-
-        shots.transform.position = muzzle.position;
+        StartCoroutine(this.CreateShot());
         Debug.Log("2");
         // 攻撃を終了する
         nextAttack = false;
@@ -156,9 +151,7 @@ public class EnemyControl : MonoBehaviour
     // 攻撃C 連射弾
     void Attack3()
     {
-        GameObject shots = Instantiate(shot) as GameObject;
-
-        shots.transform.position = muzzle.position;
+        StartCoroutine(this.CreateShot());
         Debug.Log("3");
         // 攻撃を終了する
         nextAttack = false;
@@ -187,5 +180,11 @@ public class EnemyControl : MonoBehaviour
                         transform.rotation,
                         Quaternion.LookRotation(target.position - transform.position),
                         0.1f);
+    }
+
+    IEnumerator CreateShot()
+    {
+        GameObject.Instantiate(shot, muzzle.position, muzzle.rotation);
+        yield return null;
     }
 }
