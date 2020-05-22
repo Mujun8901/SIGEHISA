@@ -9,7 +9,7 @@ public class TargetCamera : MonoBehaviour
 
 	void Start()
 	{
-		this.objTarget = GameObject.Find("Player");
+		this.objTarget = GameObject.Find("Player(Clone)");
 		offset = transform.position - objTarget.transform.position;
 	}
 

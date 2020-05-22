@@ -6,13 +6,21 @@ public class PlayerDamage : MonoBehaviour
 {
     [SerializeField]
     private float invincibleTime;
-    [SerializeField]
-    private int life;
+    public int lifeMax;
+    public int life;
     private float time;
     private bool isDamage;
+    public bool isDead;
+    GameObject panel;
+    FadeScript fade;
+    
     void Start()
     {
+        panel = GameObject.Find("Panel");
         isDamage = false;
+        isDead = false;
+        fade = panel.GetComponent<FadeScript>();
+        life = lifeMax;
     }
 
     void Update()
@@ -23,6 +31,7 @@ public class PlayerDamage : MonoBehaviour
 
     void DamageIntarval()
     {
+        if (isDead) return;
         if (isDamage)
         {
             time += Time.deltaTime;
@@ -36,6 +45,7 @@ public class PlayerDamage : MonoBehaviour
 
     void OnTriggerEnter(Collider col)
     {
+        if (isDead) return;
         if (!isDamage)
         {
             if (col.tag == "Shot")
@@ -58,10 +68,13 @@ public class PlayerDamage : MonoBehaviour
 
     void Death()
     {
-        if (life < 0)
+        if (life <= 0)
         {
             Debug.Log("死んだ");
-            
+            // 死亡アニメーション(あれば)
+            // 暗転
+            fade.FadeOut();
+            isDead = true;         
         }
     }
 }
