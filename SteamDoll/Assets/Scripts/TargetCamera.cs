@@ -5,12 +5,12 @@ using UnityEngine;
 public class TargetCamera : MonoBehaviour
 {
 	private GameObject objTarget;
+	[SerializeField]
 	private Vector3 offset;
 
 	void Start()
 	{
-		this.objTarget = GameObject.Find("Player(Clone)");
-		offset = transform.position - objTarget.transform.position;
+		this.objTarget = GameObject.Find("Player(Clone)");		
 	}
 
 	void LateUpdate()

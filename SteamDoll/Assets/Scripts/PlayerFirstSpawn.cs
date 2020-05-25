@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerFirstSpaen : MonoBehaviour
+public class PlayerFirstSpawn : MonoBehaviour
 {
     [SerializeField]
     GameObject spawnPoint;
