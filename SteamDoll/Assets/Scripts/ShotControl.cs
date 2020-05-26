@@ -16,4 +16,13 @@ public class ShotControl : MonoBehaviour
         GetComponent<Rigidbody>().AddRelativeForce(Vector3.forward * speed);
         Destroy(gameObject, lifeTime);
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag != "Shot")
+        {
+            // エフェクトを入れる
+            Destroy(this.gameObject);
+        }       
+    }
 }

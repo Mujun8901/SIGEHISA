@@ -23,9 +23,14 @@ public class EnemyControl : MonoBehaviour
     private float time = 0;
     private int move = 0;
     private LayerMask raycastLayer;
+    EnemyDamage eDamage;
+
+    private Quaternion fowardVec;
+
 
     void Start()
     {
+        eDamage = GetComponent<EnemyDamage>();
         agent = GetComponent<NavMeshAgent>();
         myTransform = transform;
         setWolk = false;
@@ -36,10 +41,10 @@ public class EnemyControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (eDamage.isDead) return;
         SearchForTorget();
         MoveForTorget();
         RangeToTarget();
-        
     }
 
     public void SearchForTorget()
@@ -191,9 +196,12 @@ public class EnemyControl : MonoBehaviour
     IEnumerator CreateShot2()
     {
         for (int i = 0; i < 5; i++)
-        { 
-
-            GameObject.Instantiate(shot, muzzle.position, muzzle.rotation);
+        {
+            float angleX = Random.Range(-30f, 30f);
+            float angleY = Random.Range(  0f, 15f);
+            float angleZ = Random.Range(-30f, 30f);
+            fowardVec = Quaternion.Euler(angleX, angleY, angleZ);
+            GameObject.Instantiate(shot, muzzle.position, muzzle.rotation * fowardVec);
             yield return null;
         }
     }

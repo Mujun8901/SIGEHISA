@@ -6,6 +6,7 @@ public class PlayerAttackAnim : MonoBehaviour
 {
     Animator animator;
     private int combo;
+    public int attackDamage = 1;
     private float comboCut;
     private float count;
     private bool isCrossAttack;
@@ -32,10 +33,12 @@ public class PlayerAttackAnim : MonoBehaviour
 
     public void CrossRangeAttack()
     {
+        
         // これ以上過ぎたらコンボを切る
         if (count > comboCut)
         {
             combo = 0;
+            attackDamage = 1;
             count = 0;
             isAttackCombo = false;
         }
@@ -51,6 +54,7 @@ public class PlayerAttackAnim : MonoBehaviour
             if (count > motionTime)
             {
                 combo++;
+                attackDamage++;
                 count = 0;
             }
             else if (combo == 0)
