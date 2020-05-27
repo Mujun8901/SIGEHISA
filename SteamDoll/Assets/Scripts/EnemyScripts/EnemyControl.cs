@@ -30,6 +30,7 @@ public class EnemyControl : MonoBehaviour
 
     void Start()
     {
+        
         eDamage = GetComponent<EnemyDamage>();
         agent = GetComponent<NavMeshAgent>();
         myTransform = transform;
@@ -139,7 +140,6 @@ public class EnemyControl : MonoBehaviour
     void Attack1()
     {
         StartCoroutine(this.CreateShot1());
-        Debug.Log("1");
         // 攻撃を終了する
         nextAttack = false;
     }
@@ -148,7 +148,6 @@ public class EnemyControl : MonoBehaviour
     void Attack2()
     {
         StartCoroutine(this.CreateShot2());
-        Debug.Log("2");
         // 攻撃を終了する
         nextAttack = false;
     }
@@ -157,7 +156,6 @@ public class EnemyControl : MonoBehaviour
     void Attack3()
     {
         StartCoroutine(this.CreateShot3());
-        Debug.Log("3");
         // 攻撃を終了する
         nextAttack = false;
     }

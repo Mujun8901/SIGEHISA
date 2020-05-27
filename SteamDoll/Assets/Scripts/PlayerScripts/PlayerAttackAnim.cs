@@ -9,8 +9,12 @@ public class PlayerAttackAnim : MonoBehaviour
     public int attackDamage = 1;
     private float comboCut;
     private float count;
-    private bool isCrossAttack;
+    public bool isCrossAttack;
     public bool isAttackCombo;
+    public bool isLongAttack;
+    public GameObject shot;
+    [SerializeField]
+    private Transform shotPos;
     [SerializeField]
     private float motionTime;
 
@@ -22,6 +26,7 @@ public class PlayerAttackAnim : MonoBehaviour
         count = 0.0f;
         isCrossAttack = false;
         isAttackCombo = false;
+        isLongAttack = false;
     }
 
     // Update is called once per frame
@@ -82,6 +87,18 @@ public class PlayerAttackAnim : MonoBehaviour
         if (Input.GetButtonDown("Fire2") && !Input.GetButton("Fire1")) 
         {
             Debug.Log("longrange");
+            StartCoroutine(CreateShot1());
         }
+    }
+
+    void LookAtEnemyNearest()
+    {
+        
+    }
+
+    IEnumerator CreateShot1()
+    {
+        GameObject.Instantiate(shot, shotPos.position, shotPos.rotation);
+        yield return null;
     }
 }

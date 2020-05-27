@@ -48,7 +48,7 @@ public class PlayerDamage : MonoBehaviour
         if (isDead) return;
         if (!isDamage)
         {
-            if (col.tag == "Shot")
+            if (col.tag == "EnemyShot")
             {
                 Debug.Log("PlayerHit");
                 Destroy(col.gameObject);
