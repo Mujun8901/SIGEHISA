@@ -6,6 +6,8 @@ public class EnemyDamage : MonoBehaviour
 {
     [SerializeField]
     private float invincibleTime;
+    PlayerAttackAnim pAttack;
+    GameObject player;
     public int lifeMax;
     public int life;
     private float time;
@@ -14,6 +16,8 @@ public class EnemyDamage : MonoBehaviour
 
     void Start()
     {
+        player = GameObject.Find("Player(Clone)");
+        pAttack = player.GetComponent<PlayerAttackAnim>();
         life = lifeMax;
         isDamage = false;
         isDead = false;
@@ -40,11 +44,15 @@ public class EnemyDamage : MonoBehaviour
     }
     void OnTriggerEnter(Collider col)
     {
-        if (col.tag == "Attack")
+        if (col.tag == "Attack") 
         {
-            Debug.Log("Hit");
-            LifeReduce(1);
+            LifeReduce(pAttack.attackDamage);
+            Debug.Log(pAttack.attackDamage);
             //StartCoroutine(SetDamageEfect());
+        }
+        if(col.tag == "PlayerShot")
+        {
+            LifeReduce(pAttack.longAttackDamage);
         }
     }
     void LifeReduce(int power)

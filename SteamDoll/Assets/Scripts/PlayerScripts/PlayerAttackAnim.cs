@@ -7,6 +7,7 @@ public class PlayerAttackAnim : MonoBehaviour
     Animator animator;
     private int combo;
     public int attackDamage = 1;
+    public int longAttackDamage = 1;
     private float comboCut;
     private float count;
     public bool isCrossAttack;
@@ -84,9 +85,18 @@ public class PlayerAttackAnim : MonoBehaviour
 
     void LongRangeAttack()
     {
-        if (Input.GetButtonDown("Fire2") && !Input.GetButton("Fire1")) 
+        if (Input.GetButtonDown("Fire2") && !Input.GetButton("Fire1") && !isLongAttack) 
         {
             Debug.Log("longrange");
+            isLongAttack = true;
+        }
+        else
+        {
+            isLongAttack = false;
+        }
+
+        if (isLongAttack)
+        {
             StartCoroutine(CreateShot1());
         }
     }

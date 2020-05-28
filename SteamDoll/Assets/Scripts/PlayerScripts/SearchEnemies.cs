@@ -4,39 +4,54 @@ using UnityEngine;
 
 public class SearchEnemies : MonoBehaviour
 {
+    private GameObject nearObj;
+    private PlayerAttackAnim pAttack;
     [SerializeField]
-    private List<GameObject> enemyList;
-    [SerializeField]
-    private GameObject nowTarget;
-    private PlayerControl playerCtrl;
-    private PlayerAttackAnim playerAtkAnim;
-    // Start is called before the first frame update
+    private GameObject shotPos;
+    private float searchTime = 0;
+
     void Start()
     {
-        enemyList = new List<GameObject>();
-        nowTarget = null;
-        playerCtrl = GetComponent<PlayerControl>();
-        playerAtkAnim = GetComponent<PlayerAttackAnim>();
+        nearObj = null;
+        pAttack = GetComponent<PlayerAttackAnim>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        nearObj = serchTag(gameObject, "Enemy");
+        if (nearObj == null) return;
+        if (pAttack.isCrossAttack || pAttack.isLongAttack)
+        {           
+            shotPos.transform.LookAt(nearObj.transform);
+        }
+        SmoothLookAt();
     }
 
-    void TargetOther()
+    GameObject serchTag(GameObject nowObj,string tagName)
     {
-        if (enemyList.Count == 0)
-        {
-            nowTarget = null;
-            return;
-        }
+        float tmpDis = 0;
+        float nearDis = 0;
 
-        if (!playerAtkAnim.isCrossAttack || 
-            !playerAtkAnim.isLongAttack) 
+        GameObject targetObj = null;
+        
+        foreach(GameObject obj in GameObject.FindGameObjectsWithTag(tagName))
         {
+            tmpDis = Vector3.Distance(obj.transform.position, nowObj.transform.position);
 
+            if (nearDis == 0 || nearDis > tmpDis)
+            {
+                nearDis = tmpDis;
+                targetObj = obj;
+            }
         }
+        return targetObj;
+    }
+
+    void SmoothLookAt()
+    {
+        transform.rotation = Quaternion.Slerp(
+                        transform.rotation,
+                        Quaternion.LookRotation(nearObj.transform.position - transform.position),
+                        0.1f);
     }
 }
