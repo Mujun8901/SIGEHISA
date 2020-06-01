@@ -19,10 +19,10 @@ public class ShotControl : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag != "Shot" || other.tag != "Enemy")
+        if (other.tag == "Enemy")
         {
             // エフェクトを入れる
-            // Destroy(this.gameObject);
+            Destroy(this.gameObject);
         }       
     }
 }

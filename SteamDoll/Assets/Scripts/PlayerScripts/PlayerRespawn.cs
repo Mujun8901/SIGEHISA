@@ -6,15 +6,17 @@ public class PlayerRespawn : MonoBehaviour
 {
     GameObject panel;
     FadeScript fade;
-    Transform spawnPoint;
     PlayerDamage pDamage;
+    GameObject spawn;
 
     void Start()
     {
+        GameObject parent = GameObject.Find("Stage");
+        spawn = parent.transform.Find("PlayerSpawnPoint").gameObject;
         panel = GameObject.Find("Panel");
-        spawnPoint = GetComponent<Transform>();
         fade = panel.GetComponent<FadeScript>();
         pDamage = GetComponent<PlayerDamage>();
+
     }
 
     void Update()
@@ -31,7 +33,7 @@ public class PlayerRespawn : MonoBehaviour
         // まず体力をもとに戻す
         pDamage.life = pDamage.lifeMax;
         // リスポーン地点に戻す
-        this.transform.position = spawnPoint.position;
+        this.transform.position = spawn.transform.position;
         pDamage.isDead = false;
     }
 }

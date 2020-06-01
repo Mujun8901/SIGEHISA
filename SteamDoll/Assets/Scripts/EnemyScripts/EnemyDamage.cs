@@ -48,7 +48,6 @@ public class EnemyDamage : MonoBehaviour
         {
             LifeReduce(pAttack.attackDamage);
             Debug.Log(pAttack.attackDamage);
-            //StartCoroutine(SetDamageEfect());
         }
         if(col.tag == "PlayerShot")
         {
@@ -77,11 +76,5 @@ public class EnemyDamage : MonoBehaviour
             // 敵を削除
             Destroy(this.gameObject);
         }
-    }
-
-    IEnumerator SetDamageEfect()
-    {
-        gameObject.GetComponent<Renderer>().material.color = Color.red;
-        yield return new WaitForSeconds(0.2f);
     }
 }

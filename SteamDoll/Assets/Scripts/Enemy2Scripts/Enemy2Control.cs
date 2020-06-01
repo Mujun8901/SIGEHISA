@@ -66,7 +66,6 @@ public class Enemy2Control : MonoBehaviour
             else
             {
                 RandomWolk();
-                Debug.Log("do");
             }
         } 
     }

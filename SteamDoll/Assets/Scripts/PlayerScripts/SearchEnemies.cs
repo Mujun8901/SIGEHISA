@@ -6,6 +6,7 @@ public class SearchEnemies : MonoBehaviour
 {
     private GameObject nearObj;
     private PlayerAttackAnim pAttack;
+    private PlayerControl pCtrl;
     [SerializeField]
     private GameObject shotPos;
     private float searchTime = 0;
@@ -14,17 +15,27 @@ public class SearchEnemies : MonoBehaviour
     {
         nearObj = null;
         pAttack = GetComponent<PlayerAttackAnim>();
+        pCtrl = GetComponent<PlayerControl>();
     }
 
     void Update()
     {
         nearObj = serchTag(gameObject, "Enemy");
         if (nearObj == null) return;
-        if (pAttack.isCrossAttack || pAttack.isLongAttack)
-        {           
-            shotPos.transform.LookAt(nearObj.transform);
+
+        if (Vector3.Distance(transform.position, nearObj.transform.position) < 15.0f && !pCtrl.isRun)
+        {
+            if (pAttack.isCrossAttack == true || pAttack.isLongAttack == true)
+            {
+                shotPos.transform.LookAt(nearObj.transform);
+            }
+            SmoothLookAt();
         }
-        SmoothLookAt();
+        else
+        {
+            shotPos.transform.rotation = transform.rotation;
+            Debug.Log("aaaa");
+        }
     }
 
     GameObject serchTag(GameObject nowObj,string tagName)
@@ -51,7 +62,9 @@ public class SearchEnemies : MonoBehaviour
     {
         transform.rotation = Quaternion.Slerp(
                         transform.rotation,
-                        Quaternion.LookRotation(nearObj.transform.position - transform.position),
+                        Quaternion.LookRotation
+                        (new Vector3(nearObj.transform.position.x - transform.position.x,
+                        0, nearObj.transform.position.z - transform.position.z)),
                         0.1f);
     }
 }

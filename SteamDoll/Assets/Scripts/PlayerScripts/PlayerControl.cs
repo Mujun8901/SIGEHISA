@@ -12,30 +12,37 @@ public class PlayerControl : MonoBehaviour
     public float gravity;
     public float smooth;
     private bool isGround;
+    public bool isWalk;
+    public bool isRun;
 
     CharacterController controller;
     Animator animator;
     Vector3 moveDir;
+    PlayerDamage pDamage;
 
     void Start()
     {
         controller = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
+        pDamage = GetComponent<PlayerDamage>();
         moveDir = Vector3.zero;
-    }
+        isWalk = false;
+        isRun = false;
+}
 
     void Update()
     {
+        if (pDamage.isDead) return;
         isGround = !controller.isGrounded;
-        if (controller.isGrounded)
+        if (isGround)
+        {
+            IsGravity();
+        }
+        else
         {
             RotatePlayer();
             MovePlayer();
             JumpPlayer();
-        }
-        else
-        {
-            IsGravity();
         }
         
         // 移動実行
@@ -43,15 +50,31 @@ public class PlayerControl : MonoBehaviour
         if (controller.isGrounded) moveDir.y = 0.0f;
         // アニメーション
         animator.SetBool("jump", isGround);
-        animator.SetFloat("speed", Vector3.Magnitude(moveDir));
+        if (Vector3.Magnitude(moveDir) > 0.1f && Vector3.Magnitude(moveDir) < 2f)
+        {
+            isWalk = true;
+            isRun = false;
+        }
+        if(Vector3.Magnitude(moveDir) > 2f)
+        {
+            isRun = true;
+            isWalk = false;
+        }
+        if(Vector3.Magnitude(moveDir) < 0.1f)
+        {
+            isWalk = false;
+            isRun = false;
+        }
+        animator.SetBool("run", isRun);
+        animator.SetBool("walk", isWalk);
     }
 
     void MovePlayer()
     {
         // 横方向
-        moveDir.x = Input.GetAxisRaw("Horizontal") * speed;
+        moveDir.x = Input.GetAxis("Horizontal") * speed;
         // 縦方向
-        moveDir.z = Input.GetAxisRaw("Vertical") * speed;
+        moveDir.z = Input.GetAxis("Vertical") * speed;
     }
 
     void JumpPlayer()

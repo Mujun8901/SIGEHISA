@@ -18,6 +18,7 @@ public class PlayerAttackAnim : MonoBehaviour
     private Transform shotPos;
     [SerializeField]
     private float motionTime;
+    PlayerDamage pDamage;
 
     void Start()
     {
@@ -28,11 +29,13 @@ public class PlayerAttackAnim : MonoBehaviour
         isCrossAttack = false;
         isAttackCombo = false;
         isLongAttack = false;
+        pDamage = GetComponent<PlayerDamage>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (pDamage.isDead) return;
         CrossRangeAttack();
         LongRangeAttack();
     }
@@ -85,7 +88,7 @@ public class PlayerAttackAnim : MonoBehaviour
 
     void LongRangeAttack()
     {
-        if (Input.GetButtonDown("Fire2") && !Input.GetButton("Fire1") && !isLongAttack) 
+        if (Input.GetButtonDown("Fire2") && !Input.GetButton("Fire1")) 
         {
             Debug.Log("longrange");
             isLongAttack = true;
@@ -99,11 +102,6 @@ public class PlayerAttackAnim : MonoBehaviour
         {
             StartCoroutine(CreateShot1());
         }
-    }
-
-    void LookAtEnemyNearest()
-    {
-        
     }
 
     IEnumerator CreateShot1()
