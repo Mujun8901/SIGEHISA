@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShotControl : MonoBehaviour
+public class PlayerShotControl : MonoBehaviour
 {
     [SerializeField]
     private float lifeTime;
@@ -17,12 +17,12 @@ public class ShotControl : MonoBehaviour
         Destroy(gameObject, lifeTime);
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider col)
     {
-        if (other.tag == "Enemy")
+        if (col.tag == "Stage" || col.tag == "Enemy")
         {
             // エフェクトを入れる
             Destroy(this.gameObject);
-        }       
+        }
     }
 }

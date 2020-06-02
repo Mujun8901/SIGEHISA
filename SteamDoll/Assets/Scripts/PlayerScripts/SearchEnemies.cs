@@ -34,7 +34,6 @@ public class SearchEnemies : MonoBehaviour
         else
         {
             shotPos.transform.rotation = transform.rotation;
-            Debug.Log("aaaa");
         }
     }
 

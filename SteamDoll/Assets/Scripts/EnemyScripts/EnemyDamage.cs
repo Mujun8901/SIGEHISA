@@ -47,7 +47,6 @@ public class EnemyDamage : MonoBehaviour
         if (col.tag == "Attack") 
         {
             LifeReduce(pAttack.attackDamage);
-            Debug.Log(pAttack.attackDamage);
         }
         if(col.tag == "PlayerShot")
         {
@@ -62,7 +61,6 @@ public class EnemyDamage : MonoBehaviour
     {
         if (life <= 0)
         {
-            Debug.Log("ショーメツ");
             // 死亡アニメーション(あれば)
             // 暗転
             isDead = true;

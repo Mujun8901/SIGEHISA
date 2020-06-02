@@ -90,7 +90,6 @@ public class PlayerAttackAnim : MonoBehaviour
     {
         if (Input.GetButtonDown("Fire2") && !Input.GetButton("Fire1")) 
         {
-            Debug.Log("longrange");
             isLongAttack = true;
         }
         else

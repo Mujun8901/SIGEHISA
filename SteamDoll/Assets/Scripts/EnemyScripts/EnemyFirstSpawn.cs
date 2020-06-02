@@ -14,7 +14,7 @@ public class EnemyFirstSpawn : MonoBehaviour
     void Start()
     {
         cnt = 0;
-        maxEnemies = 5;
+        maxEnemies = 1;
     }
 
     // Update is called once per frame

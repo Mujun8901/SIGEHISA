@@ -8,6 +8,7 @@ public class PlayerRespawn : MonoBehaviour
     FadeScript fade;
     PlayerDamage pDamage;
     GameObject spawn;
+    bool isDeth;
 
     void Start()
     {
@@ -16,7 +17,7 @@ public class PlayerRespawn : MonoBehaviour
         panel = GameObject.Find("Panel");
         fade = panel.GetComponent<FadeScript>();
         pDamage = GetComponent<PlayerDamage>();
-
+        isDeth = false;
     }
 
     void Update()
@@ -26,7 +27,15 @@ public class PlayerRespawn : MonoBehaviour
             RespawnPlayer();
         }
 
-        if (!pDamage.isDead) fade.FadeIn();
+        if (!pDamage.isDead && isDeth) 
+        {
+            fade.FadeIn();
+        }
+
+        if (fade.alfa == 0)
+        {
+            isDeth = false;
+        }
     }
     void RespawnPlayer()
     {
@@ -35,5 +44,6 @@ public class PlayerRespawn : MonoBehaviour
         // リスポーン地点に戻す
         this.transform.position = spawn.transform.position;
         pDamage.isDead = false;
+        isDeth = true;
     }
 }
