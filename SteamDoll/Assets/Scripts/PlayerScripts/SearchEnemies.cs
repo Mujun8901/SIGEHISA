@@ -21,7 +21,12 @@ public class SearchEnemies : MonoBehaviour
     void Update()
     {
         nearObj = serchTag(gameObject, "Enemy");
-        if (nearObj == null) return;
+        if (nearObj == null)
+        {
+            shotPos.transform.rotation = transform.rotation;
+            return; 
+        }
+
 
         if (Vector3.Distance(transform.position, nearObj.transform.position) < 15.0f && !pCtrl.isRun)
         {

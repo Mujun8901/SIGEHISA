@@ -21,16 +21,19 @@ public class EnemyControl : MonoBehaviour
     public NavMeshAgent agent;
     private bool nextAttack = false;
     private float time = 0;
-    private int move = 0;
     private LayerMask raycastLayer;
     EnemyDamage eDamage;
-
+    EnemyNavControl eneNavCon;
+    GameObject child;
     private Quaternion fowardVec;
 
 
     void Start()
     {
-        
+#pragma warning disable CS0618 // 型またはメンバーが旧型式です
+        child = transform.FindChild("GameObject").gameObject;
+#pragma warning restore CS0618 // 型またはメンバーが旧型式です
+        eneNavCon = child.GetComponent<EnemyNavControl>();
         eDamage = GetComponent<EnemyDamage>();
         agent = GetComponent<NavMeshAgent>();
         myTransform = transform;
@@ -43,13 +46,26 @@ public class EnemyControl : MonoBehaviour
     void Update()
     {
         if (eDamage.isDead) return;
-        SearchForTorget();
-        MoveForTorget();
-        RangeToTarget();
+        if (eneNavCon.isGround)
+        {
+            GetComponent<NavMeshAgent>().enabled = true;
+            SearchForTorget();
+            MoveForTorget();
+            RangeToTarget();
+        }
+        else
+        {
+            GetComponent<NavMeshAgent>().enabled = false;
+            MoveY();
+        }
+        
     }
 
-    public void SearchForTorget()
+    void SearchForTorget()
     {
+        
+        if (!eneNavCon.isGround) return;
+        
         target = null;
         if (target == null)
         {
@@ -69,6 +85,7 @@ public class EnemyControl : MonoBehaviour
 
     void MoveForTorget()
     {
+        if (!eneNavCon.isGround) return;
         if (target != null)
         {
             SetNavDestination(target);
@@ -77,12 +94,14 @@ public class EnemyControl : MonoBehaviour
 
     void SetNavDestination(Transform dest)
     {
+        if (!eneNavCon.isGround) return;
         agent.SetDestination(dest.position);
     }
 
     void RandomWolk()
     {
-        if(!setWolk)
+        if (!eneNavCon.isGround) return;
+        if (!setWolk)
         {
             Vector3 myPos = myTransform.position;
             Vector2 randomPos = Random.insideUnitCircle * 20;
@@ -101,6 +120,7 @@ public class EnemyControl : MonoBehaviour
     
     void RangeToTarget()
     {
+        if (!eneNavCon.isGround) return;
         Collider[] hitColliders = Physics.OverlapSphere
                            (myTransform.position, enemySearchRadius, raycastLayer);
 
@@ -211,5 +231,13 @@ public class EnemyControl : MonoBehaviour
             GameObject.Instantiate(shot, muzzle.position, muzzle.rotation);
             yield return new WaitForSeconds(0.5f);
         }        
+    }
+
+    void MoveY()
+    {
+        Vector3 moveDir = transform.position;
+        float gravity = 10;
+        moveDir.y -= gravity * Time.deltaTime;
+        transform.position = moveDir;
     }
 }

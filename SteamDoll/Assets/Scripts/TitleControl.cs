@@ -18,6 +18,8 @@ public class TitleControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log("Screen Width : " + Screen.width);
+        Debug.Log("Screen  height: " + Screen.height);
         if (Input.anyKeyDown) isInput = true;
         if (isInput)
         {
