@@ -48,9 +48,8 @@ public class PlayerDamage : MonoBehaviour
         if (isDead) return;
         if (!isDamage)
         {
-            if (col.tag == "EnemyShot")
+            if (col.tag == "EnemyShot" || col.tag == "BossShot")
             {
-                Debug.Log("PlayerHit");
                 Destroy(col.gameObject);
                 // エネミーに設定されたダメージが入る
                 LifeReduce(1);

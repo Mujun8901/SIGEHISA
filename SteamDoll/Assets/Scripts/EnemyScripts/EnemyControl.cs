@@ -28,6 +28,7 @@ public class EnemyControl : MonoBehaviour
     private Quaternion fowardVec;
 
 
+
     void Start()
     {
 #pragma warning disable CS0618 // 型またはメンバーが旧型式です
