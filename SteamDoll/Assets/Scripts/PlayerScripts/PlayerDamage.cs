@@ -69,11 +69,12 @@ public class PlayerDamage : MonoBehaviour
     {
         if (life <= 0)
         {
+            isDead = true;
             Debug.Log("死んだ");
             // 死亡アニメーション(あれば)
             // 暗転
             fade.FadeOut();
-            isDead = true;         
+                   
         }
     }
 }

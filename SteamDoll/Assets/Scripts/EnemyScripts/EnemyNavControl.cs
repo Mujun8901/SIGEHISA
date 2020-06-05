@@ -5,13 +5,13 @@ using UnityEngine;
 public class EnemyNavControl : MonoBehaviour
 {
     GameObject parent;
-    EnemyControl eneCon;
+    Enemy3Control eneCon;
     public bool isGround;
 
     void Start()
     {
         parent = transform.root.gameObject;
-        eneCon = parent.GetComponent<EnemyControl>();
+        eneCon = parent.GetComponent<Enemy3Control>();
         isGround = false;
     }
 

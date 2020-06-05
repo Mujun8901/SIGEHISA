@@ -24,11 +24,12 @@ public class RemainingEnemy : MonoBehaviour
         if (remainingEnemy.Length < 1)
         {
             fade.FadeOut();
-        }
-        if (fade.alfa == 1)
-        {
-            // シーン移動
-            SceneManager.LoadScene("BossStage");
+
+            if (fade.alfa == 1)
+            {
+                // シーン移動
+                SceneManager.LoadScene("BossStage");
+            }
         }
     }
 }

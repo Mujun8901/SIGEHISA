@@ -27,23 +27,29 @@ public class PlayerRespawn : MonoBehaviour
             RespawnPlayer();
         }
 
-        if (!pDamage.isDead && isDeth) 
+        if (isDeth) 
         {
             fade.FadeIn();
+            if (fade.alfa < 0.7)
+            {
+                pDamage.isDead = false;
+                if (fade.alfa == 0)
+                {
+                    isDeth = false;
+                }
+            }
         }
-
-        if (fade.alfa == 0)
-        {
-            isDeth = false;
-        }
+       
+        
     }
     void RespawnPlayer()
     {
+        if (fade.alfa != 1) return; 
         // まず体力をもとに戻す
         pDamage.life = pDamage.lifeMax;
         // リスポーン地点に戻す
         this.transform.position = spawn.transform.position;
-        pDamage.isDead = false;
+        this.transform.rotation = spawn.transform.rotation;
         isDeth = true;
     }
 }

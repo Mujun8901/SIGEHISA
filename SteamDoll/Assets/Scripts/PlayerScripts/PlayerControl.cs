@@ -32,7 +32,14 @@ public class PlayerControl : MonoBehaviour
 
     void Update()
     {
-        if (pDamage.isDead) return;
+        if (pDamage.isDead)
+        {
+            isRun = false;
+            isWalk = false;
+            isGround = false;
+            return;
+        }
+
         isGround = !controller.isGrounded;
         if (isGround)
         {
@@ -71,6 +78,8 @@ public class PlayerControl : MonoBehaviour
 
     void MovePlayer()
     {
+        if (pDamage.isDead) return;
+
         // 横方向
         moveDir.x = Input.GetAxis("Horizontal") * speed;
         // 縦方向
@@ -79,6 +88,8 @@ public class PlayerControl : MonoBehaviour
 
     void JumpPlayer()
     {
+        if (pDamage.isDead)return;
+        
         // ジャンプ
         if (Input.GetButton("Jump"))
         {
@@ -92,6 +103,8 @@ public class PlayerControl : MonoBehaviour
 
     void RotatePlayer()
     {
+        if (pDamage.isDead) return;
+
         if (moveDir.magnitude > 0.1f)
         {
             Quaternion rotation = Quaternion.LookRotation(new Vector3(moveDir.x, 0, moveDir.z));
