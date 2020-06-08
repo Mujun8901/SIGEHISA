@@ -23,11 +23,20 @@ public class Enemy3Control : MonoBehaviour
     EnemyNavControl eneNavCon;
     GameObject child;
     private Quaternion fowardVec;
-
+    [SerializeField]
+    private AudioSource audioSource;
+    [SerializeField]
+    private AudioClip cannonSound;
+    [SerializeField]
+    private AudioClip shotGunSound;
+    [SerializeField]
+    private float vol;
 
 
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
+        audioSource.volume = vol;
 #pragma warning disable CS0618 // 型またはメンバーが旧型式です
         child = transform.Find("GameObject").gameObject;
 #pragma warning restore CS0618 // 型またはメンバーが旧型式です
@@ -206,6 +215,7 @@ public class Enemy3Control : MonoBehaviour
     IEnumerator CreateShot1()
     {
         GameObject.Instantiate(shot, muzzle.position, muzzle.rotation);
+        audioSource.PlayOneShot(cannonSound);
         yield return null;
     }
 
@@ -220,13 +230,16 @@ public class Enemy3Control : MonoBehaviour
             GameObject.Instantiate(shot, muzzle.position, muzzle.rotation * fowardVec);
             yield return null;
         }
+        audioSource.PlayOneShot(shotGunSound);
     }
 
     IEnumerator CreateShot3()
     {
         for (int i = 0; i < 3; i++)
         {
-            GameObject.Instantiate(shot, muzzle.position, muzzle.rotation);
+            GameObject.Instantiate(shot, muzzle.position, muzzle.rotation); 
+            audioSource.PlayOneShot(cannonSound);
+
             yield return new WaitForSeconds(0.5f);
         }
     }

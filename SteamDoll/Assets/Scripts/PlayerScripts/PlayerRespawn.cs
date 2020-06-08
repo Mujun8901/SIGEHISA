@@ -30,13 +30,14 @@ public class PlayerRespawn : MonoBehaviour
         if (isDeth) 
         {
             fade.FadeIn();
-            if (fade.alfa < 0.7)
+            if (fade.alfa < 0.7 && isDeth)
             {
                 pDamage.isDead = false;
-                if (fade.alfa == 0)
-                {
-                    isDeth = false;
-                }
+                
+            }
+            if (fade.alfa == 0)
+            {
+                isDeth = false;
             }
         }
        

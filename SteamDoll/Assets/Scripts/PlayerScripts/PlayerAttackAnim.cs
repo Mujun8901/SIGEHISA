@@ -42,7 +42,7 @@ public class PlayerAttackAnim : MonoBehaviour
 
     public void CrossRangeAttack()
     {
-        
+        if (pDamage.isDead) return;
         // これ以上過ぎたらコンボを切る
         if (count > comboCut)
         {
@@ -88,6 +88,7 @@ public class PlayerAttackAnim : MonoBehaviour
 
     void LongRangeAttack()
     {
+        if (pDamage.isDead) return;
         if (Input.GetButtonDown("Fire2") && !Input.GetButton("Fire1")) 
         {
             isLongAttack = true;

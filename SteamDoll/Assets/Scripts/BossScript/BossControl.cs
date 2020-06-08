@@ -18,12 +18,23 @@ public class BossControl : MonoBehaviour
     SummonEnemise summon;
     GameObject[] spawner;
 
+    [SerializeField]
+    private AudioSource audioSource;
+    [SerializeField]
+    private AudioClip cannonSound;
+    [SerializeField]
+    private AudioClip shotGunSound;
+    [SerializeField]
+    private float vol;
+
     void Start()
     {
         spawner = GameObject.FindGameObjectsWithTag("EnemySpawner");
         target = GameObject.Find("Player(Clone)").transform;
         isAttack = false;
         setWolk = false;
+        audioSource = GetComponent<AudioSource>();
+        audioSource.volume = vol;
     }
 
     // Update is called once per frame
@@ -131,6 +142,7 @@ public class BossControl : MonoBehaviour
     IEnumerator CreateShot1()
     {
         GameObject.Instantiate(shot, muzzle.position, muzzle.rotation);
+        audioSource.PlayOneShot(cannonSound);
         yield return null;
     }
 
@@ -145,6 +157,7 @@ public class BossControl : MonoBehaviour
             GameObject.Instantiate(shot, muzzle.position, muzzle.rotation * fowardVec);
             yield return null;
         }
+        audioSource.PlayOneShot(shotGunSound);
     }
 
     IEnumerator CreateShot3()
@@ -152,6 +165,7 @@ public class BossControl : MonoBehaviour
         for (int i = 0; i < 3; i++)
         {
             GameObject.Instantiate(shot, muzzle.position, muzzle.rotation);
+            audioSource.PlayOneShot(cannonSound);
             yield return new WaitForSeconds(0.5f);
         }
     }

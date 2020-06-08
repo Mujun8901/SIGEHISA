@@ -10,9 +10,19 @@ public class ProcessPlayerAnimEvent : MonoBehaviour
     private CapsuleCollider capColRightHand;
     [SerializeField]
     private CapsuleCollider capColFoot;
+    [SerializeField]
+    private AudioSource audioSource;
+    [SerializeField]
+    private AudioClip footSoundHigh;
+    [SerializeField]
+    private AudioClip footSoundLow;
+    public float vol;
+
     // Start is called before the first frame update
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
+        audioSource.volume = vol;
     }
 
     void AttackStartLeftHand()
@@ -49,5 +59,25 @@ public class ProcessPlayerAnimEvent : MonoBehaviour
         capColLeftHand.enabled = false;
         capColRightHand.enabled = false;
         capColFoot.enabled = false;
+    }
+
+    void WalkSoundHigh()
+    {
+        audioSource.PlayOneShot(footSoundHigh);
+    }
+
+    void WalkSoundLow()
+    {
+        audioSource.PlayOneShot(footSoundLow);
+    }
+
+    void RunSoundHigh()
+    {
+        audioSource.PlayOneShot(footSoundHigh);
+    }
+
+    void RunSoundLow()
+    {
+        audioSource.PlayOneShot(footSoundLow);
     }
 }

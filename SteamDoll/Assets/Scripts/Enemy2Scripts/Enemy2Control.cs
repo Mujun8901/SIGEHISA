@@ -28,10 +28,20 @@ public class Enemy2Control : MonoBehaviour
     EnemyDamage eDamage;
 
     private Quaternion fowardVec;
+    [SerializeField]
+    private AudioSource audioSource;
+    [SerializeField]
+    private AudioClip cannonSound;
+    [SerializeField]
+    private AudioClip shotGunSound;
+    [SerializeField]
+    private float vol;
 
 
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
+        audioSource.volume = vol;
         eDamage = GetComponent<EnemyDamage>();
         agent = enemy.GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
@@ -193,6 +203,7 @@ public class Enemy2Control : MonoBehaviour
     IEnumerator CreateShot1()
     {
         GameObject.Instantiate(shot, muzzle.position, muzzle.rotation);
+        audioSource.PlayOneShot(cannonSound);
         yield return null;
     }
 
@@ -207,13 +218,15 @@ public class Enemy2Control : MonoBehaviour
             GameObject.Instantiate(shot, muzzle.position, muzzle.rotation * fowardVec);
             yield return null;
         }
+        audioSource.PlayOneShot(shotGunSound);
     }
 
     IEnumerator CreateShot3()
     {
         for (int i = 0; i < 3; i++)
         {
-            GameObject.Instantiate(shot, muzzle.position, muzzle.rotation);
+            GameObject.Instantiate(shot, muzzle.position, muzzle.rotation); 
+            audioSource.PlayOneShot(cannonSound);
             yield return new WaitForSeconds(0.5f);
         }        
     }

@@ -9,17 +9,19 @@ public class SearchEnemies : MonoBehaviour
     private PlayerControl pCtrl;
     [SerializeField]
     private GameObject shotPos;
-    private float searchTime = 0;
+    PlayerDamage pDamage;
 
     void Start()
     {
         nearObj = null;
         pAttack = GetComponent<PlayerAttackAnim>();
         pCtrl = GetComponent<PlayerControl>();
+        pDamage = GetComponent<PlayerDamage>();
     }
 
     void Update()
     {
+        if (pDamage.isDead) return;
         nearObj = serchTag(gameObject, "Enemy");
         if (nearObj == null)
         {

@@ -32,14 +32,7 @@ public class PlayerControl : MonoBehaviour
 
     void Update()
     {
-        if (pDamage.isDead)
-        {
-            isRun = false;
-            isWalk = false;
-            isGround = false;
-            return;
-        }
-
+        if (pDamage.isDead)return;
         isGround = !controller.isGrounded;
         if (isGround)
         {

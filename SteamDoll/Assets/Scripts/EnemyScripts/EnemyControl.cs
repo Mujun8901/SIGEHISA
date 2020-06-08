@@ -24,11 +24,20 @@ public class EnemyControl : MonoBehaviour
     private LayerMask raycastLayer;
     EnemyDamage eDamage;
     private Quaternion fowardVec;
-
+    [SerializeField]
+    private AudioSource audioSource;
+    [SerializeField]
+    private AudioClip cannonSound;
+    [SerializeField]
+    private AudioClip shotGunSound;
+    [SerializeField]
+    private float vol;
 
 
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
+        audioSource.volume = vol;
         eDamage = GetComponent<EnemyDamage>();
         agent = GetComponent<NavMeshAgent>();
         myTransform = transform;
@@ -186,6 +195,7 @@ public class EnemyControl : MonoBehaviour
     IEnumerator CreateShot1()
     {
         GameObject.Instantiate(shot, muzzle.position, muzzle.rotation);
+        audioSource.PlayOneShot(cannonSound);
         yield return null;
     }
 
@@ -200,6 +210,7 @@ public class EnemyControl : MonoBehaviour
             GameObject.Instantiate(shot, muzzle.position, muzzle.rotation * fowardVec);
             yield return null;
         }
+        audioSource.PlayOneShot(shotGunSound);
     }
 
     IEnumerator CreateShot3()
@@ -207,6 +218,7 @@ public class EnemyControl : MonoBehaviour
         for (int i = 0; i < 3; i++)
         {
             GameObject.Instantiate(shot, muzzle.position, muzzle.rotation);
+            audioSource.PlayOneShot(cannonSound);
             yield return new WaitForSeconds(0.5f);
         }        
     }
