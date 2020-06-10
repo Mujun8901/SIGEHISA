@@ -16,6 +16,12 @@ public class ProcessPlayerAnimEvent : MonoBehaviour
     private AudioClip footSoundHigh;
     [SerializeField]
     private AudioClip footSoundLow;
+    [SerializeField]
+    private AudioClip crossSe1;
+    [SerializeField]
+    private AudioClip crossSe2;
+    [SerializeField]
+    private AudioClip crossSe3;
     public float vol;
 
     // Start is called before the first frame update
@@ -27,6 +33,7 @@ public class ProcessPlayerAnimEvent : MonoBehaviour
 
     void AttackStartLeftHand()
     {
+        audioSource.PlayOneShot(crossSe1);
         capColLeftHand.enabled = true;
     }
     void AttackEndLeftHand()
@@ -36,6 +43,7 @@ public class ProcessPlayerAnimEvent : MonoBehaviour
 
     void AttackStartRightHand()
     {
+        audioSource.PlayOneShot(crossSe2);
         capColRightHand.enabled = true;
         capColLeftHand.enabled = false;
     }
@@ -46,6 +54,7 @@ public class ProcessPlayerAnimEvent : MonoBehaviour
 
     void AttackStartFoot()
     {
+        audioSource.PlayOneShot(crossSe3);
         capColFoot.enabled = true;
         capColRightHand.enabled = false;
     }

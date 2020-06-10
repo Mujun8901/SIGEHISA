@@ -25,7 +25,9 @@ public class BossControl : MonoBehaviour
     [SerializeField]
     private AudioClip shotGunSound;
     [SerializeField]
-    private float vol;
+    private float cannonVol;
+    [SerializeField]
+    private float shotGunVol;
 
     void Start()
     {
@@ -34,7 +36,7 @@ public class BossControl : MonoBehaviour
         isAttack = false;
         setWolk = false;
         audioSource = GetComponent<AudioSource>();
-        audioSource.volume = vol;
+        
     }
 
     // Update is called once per frame
@@ -142,6 +144,7 @@ public class BossControl : MonoBehaviour
     IEnumerator CreateShot1()
     {
         GameObject.Instantiate(shot, muzzle.position, muzzle.rotation);
+        audioSource.volume = cannonVol;
         audioSource.PlayOneShot(cannonSound);
         yield return null;
     }
@@ -157,6 +160,7 @@ public class BossControl : MonoBehaviour
             GameObject.Instantiate(shot, muzzle.position, muzzle.rotation * fowardVec);
             yield return null;
         }
+        audioSource.volume = shotGunVol;
         audioSource.PlayOneShot(shotGunSound);
     }
 
@@ -165,6 +169,7 @@ public class BossControl : MonoBehaviour
         for (int i = 0; i < 3; i++)
         {
             GameObject.Instantiate(shot, muzzle.position, muzzle.rotation);
+            audioSource.volume = cannonVol;
             audioSource.PlayOneShot(cannonSound);
             yield return new WaitForSeconds(0.5f);
         }
