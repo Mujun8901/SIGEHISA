@@ -14,26 +14,41 @@ public class PlayerControl : MonoBehaviour
     private bool isGround;
     public bool isWalk;
     public bool isRun;
+    private bool tmpIsGround;
 
     CharacterController controller;
     Animator animator;
     Vector3 moveDir;
     PlayerDamage pDamage;
+    [SerializeField]
+    private AudioSource audioSource;
+    [SerializeField]
+    private AudioClip landing;
 
     void Start()
     {
         controller = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
         pDamage = GetComponent<PlayerDamage>();
+
         moveDir = Vector3.zero;
         isWalk = false;
         isRun = false;
+        isGround = false;
 }
 
     void Update()
     {
         if (pDamage.isDead)return;
         isGround = !controller.isGrounded;
+
+        if (!isGround && tmpIsGround)
+        {
+            Debug.Log("landing");
+            audioSource.PlayOneShot(landing);
+        }
+
+        tmpIsGround = isGround;
         if (isGround)
         {
             IsGravity();

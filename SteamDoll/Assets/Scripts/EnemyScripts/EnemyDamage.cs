@@ -13,9 +13,13 @@ public class EnemyDamage : MonoBehaviour
     private float time;
     private bool isDamage;
     public bool isDead;
+    GameObject manager;
+    ScoreManager scoreManager;
 
     void Start()
     {
+        manager = GameObject.Find("ScoreManager");
+        scoreManager = manager.GetComponent<ScoreManager>();
         player = GameObject.Find("Player(Clone)");
         pAttack = player.GetComponent<PlayerAttackAnim>();
         life = lifeMax;
@@ -61,16 +65,12 @@ public class EnemyDamage : MonoBehaviour
     {
         if (life <= 0)
         {
-            // 死亡アニメーション(あれば)
-            // 暗転
             isDead = true;
         }
+
         if (isDead)
         {
-            // スコア加算
-
-            // ここでエフェクト
-
+            scoreManager.AddScore();
             // 敵を削除
             Destroy(this.gameObject);
         }

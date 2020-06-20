@@ -13,8 +13,11 @@ public class TitleControl : MonoBehaviour
     private AudioSource source;
     public AudioClip audio;
     public float vol;
+    
+
     private void Start()
     {
+
         panel = GameObject.Find("Panel");
         fade = panel.GetComponent<FadeScript>();
         source = GetComponent<AudioSource>();

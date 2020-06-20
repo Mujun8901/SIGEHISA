@@ -9,12 +9,10 @@ public class RemainingEnemy : MonoBehaviour
     GameObject[] remainingEnemy;
     GameObject panel;
     FadeScript fade;
-    bool isFade;
     void Start()
     {
         panel = GameObject.Find("Panel");
         fade = panel.GetComponent<FadeScript>();
-        isFade = false;
     }
 
     void LateUpdate()

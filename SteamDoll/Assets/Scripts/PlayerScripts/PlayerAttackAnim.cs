@@ -19,7 +19,10 @@ public class PlayerAttackAnim : MonoBehaviour
     [SerializeField]
     private float motionTime;
     PlayerDamage pDamage;
-
+    [SerializeField]
+    private AudioSource audioSource;
+    [SerializeField]
+    private AudioClip shotSE;
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -100,6 +103,7 @@ public class PlayerAttackAnim : MonoBehaviour
 
         if (isLongAttack)
         {
+            audioSource.PlayOneShot(shotSE);
             StartCoroutine(CreateShot1());
         }
     }
