@@ -36,19 +36,24 @@ public class ScoreManager : MonoBehaviour
     public void Sort()
     {
         int iterationNum = 0;
-        score[5] = scoreTmp;
+
         for(int i= 0; i < score.Length; i++)
         {
             for(int j = 1; j < score.Length - i; j++)
             {
                 iterationNum++;
-                if (score[j] < score[j - 1])
+                if (score[j] > score[j - 1])
                 {
                     int temp = score[j];
                     score[j] = score[j - 1];
                     score[j - 1] = temp;
                 }
             }
+        }
+
+        if (score[5] < scoreTmp)
+        {
+            score[5] = scoreTmp;
         }
     }
 }
